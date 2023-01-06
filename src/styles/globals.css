@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .transition-notificy {
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.256, 1.35);
+  }
+  #__next {
+    position: relative;
+    overflow-x: hidden;
+  }
+}

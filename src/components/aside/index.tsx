@@ -11,8 +11,8 @@ const Aside = () => {
     const { showAside } = React.useContext(GlobalCtx);
 
     return (
-        <aside className={classNames('h-full border-r border-black-700 flex flex-col justify-between transition-width', {'w-64': showAside}, {'w-20': !showAside})}>
-            <div className={classNames({'flex flex-col items-center': !showAside})}>
+        <aside className={classNames("h-full border-r border-black-700 flex flex-col justify-between transition-width", {"w-64": showAside}, {"w-20": !showAside})}>
+            <div className={classNames({"flex flex-col items-center": !showAside})}>
                 <HeaderAside />
                 <NavAside />
             </div>

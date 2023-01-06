@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 
 export type AuthUser = {
     id: number;
@@ -12,4 +12,19 @@ export type AuthUser = {
     sex: boolean;
     address: string;
     officeId: number;
+}
+
+export type UserApi = (User & {
+    office: {
+        name: string;
+        salary: number;
+    };
+    login: {
+        email: string;
+    } | null;
+})
+
+export type UserContentModal = {
+    type: "view" | "register" | "update";
+    employeeSelect?: UserApi;
 }

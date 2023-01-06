@@ -13,13 +13,14 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ value, setValue, label, onChange, onClick, validateAt, error, ...rest }: IInputProps) => {
     return (
-        <label className={'w-full text-lg text-white-50'}>
+        <label className={"w-full text-lg text-white-50"}>
             {label}
             <input
+                value={value}
                 onClick={onClick}
                 onChange={onChange}
                 onBlur={validateAt} 
-                className='block w-full px-3 py-2 mt-1 rounded text-base outline-none text-black-900 border-2 border-black-400 transition-colors  hover:border-black-800 focus:border-black-800 disabled:border-black-800 disabled:text-white-50' 
+                className="block w-full px-3 py-2 mt-1 rounded text-base outline-none text-black-900 border-2 border-black-400 transition-colors  hover:border-black-800 focus:border-black-800 disabled:border-black-800 disabled:text-white-50" 
                 {...rest} />
             {error && <Error>{ error }</Error>}
         </label>

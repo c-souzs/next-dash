@@ -1,12 +1,14 @@
+import { FormEvent } from "react";
+
 import { GetServerSideProps } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { FormEvent } from "react";
+import { authOptions } from "./api/auth/[...nextauth]";
+
 import Button from "../components/form/Button";
 import Input from "../components/form/Input";
 import useInput from "../hooks/useInput";
-import { authOptions } from "./api/auth/[...nextauth]";
 
 const Login = () => {
     const { value: valueEmail, ...restEmail } = useInput({type: "email"});
@@ -23,8 +25,8 @@ const Login = () => {
                 password: valuePassword
             });
             
-            if(isSuccess && isSuccess.ok) router.push('/')
-            else router.push('/login');
+            if(isSuccess && isSuccess.ok) router.push("/")
+            else router.push("/login");
         }
     }
     
@@ -48,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await unstable_getServerSession(req, res, authOptions);
 
     if(session) return {
-            redirect: { destination: '/', permanent: true }
+            redirect: { destination: "/", permanent: true }
         }
 
     return {

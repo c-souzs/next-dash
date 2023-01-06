@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const useHours = () => {
     const date = new Date().toLocaleDateString();
     
-    const [hours, setHours] = React.useState('');
+    const [hours, setHours] = React.useState("");
 
     React.useEffect(() => {
         const intervalHours = setInterval(() => {

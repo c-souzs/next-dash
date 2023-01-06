@@ -11,9 +11,8 @@ type TUseInputParams = {
     type: keyof typeof rgxs | null;
 }
 
-
 const useInput = ({ type }: TUseInputParams) => {
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = React.useState("");
     const [error, setError] = React.useState<string | null>(null);
 
     const validate = (enteredValue: string) => {        

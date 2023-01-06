@@ -1,6 +1,6 @@
 import { NextAuthOptions, SessionStrategy } from "next-auth";
 import NextAuth from "next-auth";
-import CredentitalsProvider from 'next-auth/providers/credentials';
+import CredentitalsProvider from "next-auth/providers/credentials";
 
 import { getUserFromEmail } from "../../../lib/user/getUserFromEmail";
 import { comparePassword } from "../../../utils/bcrypt";
@@ -10,10 +10,10 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentitalsProvider({
-            id: 'credentials',
+            id: "credentials",
             credentials: {
-                email: {label: 'E-mail', type: 'email'},
-                password: { label: 'Senha', type: 'password' }
+                email: {label: "E-mail", type: "email"},
+                password: { label: "Senha", type: "password" }
             },
             authorize: async (credentials) => {
                 if(credentials && credentials.email && credentials.password){
@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
         }
     },
     session: {
-		strategy: 'jwt' as SessionStrategy,
+		strategy: "jwt" as SessionStrategy,
 		maxAge: 3600,
 	},
 	jwt: {

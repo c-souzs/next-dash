@@ -1,13 +1,12 @@
 import { NextApiHandler } from "next";
+
 import prismadb from "../../../lib/prismadb";
 import { getAllUsers } from "../../../lib/user/getAll";
 import { encodePassword } from "../../../utils/bcrypt";
 
 const handlerPost: NextApiHandler = async (req, res) => {
     const { name, image, sex, address, officeId, email  } = req.body;
-
     const password = encodePassword(email);
-    console.log({ name, image, sex, address, officeId, email, password });
     
     try {
         
@@ -23,19 +22,33 @@ const handlerPost: NextApiHandler = async (req, res) => {
         });
 
         return res.status(200).json({
-            user
+            data: user
         });
     } catch (e) {
-        console.log(e);
         return res.status(401).json({
             message: e
         });
     }
 }
 
-const handleGet: NextApiHandler = async (req, res) => {
+const handlerGet: NextApiHandler = async (req, res) => {
     try {
         const users = await getAllUsers();
+
+        return res.status(200).json({
+            data: users
+        });
+    } catch (e) {
+        return res.status(401).json({
+            message: e
+        })
+    }
+}
+
+const handlerDelete: NextApiHandler = async (req, res) => {
+    try {
+        await prismadb.login.deleteMany();
+        const users = await prismadb.user.deleteMany();
 
         return res.status(200).json({
             data: users
@@ -55,7 +68,10 @@ const handler: NextApiHandler = async (req, res) => {
             handlerPost(req, res);
             break;
         case 'GET':
-            handleGet(req, res);
+            handlerGet(req, res);
+            break;
+        case 'DELETE':
+            handlerDelete(req, res);
             break;
         default:
             return res.status(404).json({message: 'Route not found.'})

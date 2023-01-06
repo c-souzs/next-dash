@@ -1,4 +1,4 @@
-import { genSaltSync, hashSync, compareSync } from 'bcrypt';
+import { genSaltSync, hashSync, compareSync } from "bcrypt";
 
 
 export const encodePassword = (rawPassword: string) => {
