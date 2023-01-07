@@ -53,12 +53,27 @@ model User {
   @@index([officeId])
 }
 
-model Test {
-  id          Int      @id @default(autoincrement())
-  name        String
-  image       String
-  sex         Boolean
-  register    DateTime @default(now())
-  amountSales Int      @default(0)
-  address     String
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  products Product[]
+
+  @@map("category")
+}
+
+model Product {
+  id     Int    @id @default(autoincrement())
+  name   String
+  amount Int
+
+  register      DateTime @default(now())
+  purchasePrice Float
+  saleValue     Float
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  @@index([categoryId])
+  @@map("product")
 }

@@ -3,11 +3,12 @@ import { NextApiHandler } from "next";
 import prismadb from "../../../lib/prismadb";
 
 const handlerGet: NextApiHandler = async (req, res) => {
+    
     try {
-        const positions = await prismadb.office.findMany();
-
+        const categories = await prismadb.category.findMany();
+        
         return res.status(200).json({
-            data: { positions }
+            data: { categories }
         });
     } catch (e) {
         return res.status(401).json({

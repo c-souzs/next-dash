@@ -1,28 +1,23 @@
 import { NextApiHandler } from "next";
 
 import prismadb from "../../../lib/prismadb";
-import { getAllUsers } from "../../../lib/user/getAll";
-import { encodePassword } from "../../../utils/bcrypt";
+import { getAllProducts } from "../../../lib/product/getAll";
 
 const handlerPost: NextApiHandler = async (req, res) => {
-    const { name, image, sex, address, officeId, email  } = req.body;
-    const password = encodePassword(email);
+    const { name, amount, purchase, sale, categoryId  } = req.body;
     
     try {
         
-        const user = await prismadb.user.create({
+        const product = await prismadb.product.create({
             data: {
-                name, address, image, sex, officeId,
-                login: {
-                    create: {
-                        email, password
-                    }
-                }
+                name, amount, categoryId,
+                purchasePrice: purchase,
+                saleValue: sale
             }
         });
 
         return res.status(200).json({
-            data: user
+            data: product
         });
     } catch (e) {
         return res.status(401).json({
@@ -33,10 +28,10 @@ const handlerPost: NextApiHandler = async (req, res) => {
 
 const handlerGet: NextApiHandler = async (req, res) => {
     try {
-        const users = await getAllUsers();
+        const products = await getAllProducts();
 
         return res.status(200).json({
-            data: users
+            data: products
         });
     } catch (e) {
         return res.status(401).json({
@@ -47,16 +42,9 @@ const handlerGet: NextApiHandler = async (req, res) => {
 
 const handlerDelete: NextApiHandler = async (req, res) => {
     const { ids } = req.body as { ids: number[] };
-
+    
     try {
-        await prismadb.login.deleteMany({
-            where: {
-                userId: {
-                    in: ids
-                }
-            }
-        });
-        const users = await prismadb.user.deleteMany({
+        const productsDelete = await prismadb.product.deleteMany({
             where: {
                 id: {
                     in: ids
@@ -65,7 +53,7 @@ const handlerDelete: NextApiHandler = async (req, res) => {
         });
 
         return res.status(200).json({
-            data: users
+            data: productsDelete
         });
     } catch (e) {
         return res.status(401).json({

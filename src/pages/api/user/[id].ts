@@ -39,7 +39,7 @@ const handlerPut: NextApiHandler = async (req, res) => {
             data: dataUpdateUser
         });
 
-        await prisma?.login.update({
+        await prismadb.login.update({
             where: {
                 id: Number(id)
             },
@@ -56,7 +56,7 @@ const handlerPut: NextApiHandler = async (req, res) => {
     }
 }
 
-const handleDelete: NextApiHandler = async (req, res) => {
+const handlerDelete: NextApiHandler = async (req, res) => {
     const { id } = req.query;
     const idNumber = Number(id);
     
@@ -90,7 +90,7 @@ const handler: NextApiHandler = async (req, res) => {
             handlerPut(req, res);
             break;
         case 'DELETE':
-            handleDelete(req, res);
+            handlerDelete(req, res);
             break;
         default:
             return res.status(404).json({message: 'Route not found.'})

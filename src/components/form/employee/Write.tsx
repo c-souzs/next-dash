@@ -16,8 +16,7 @@ const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
     const { value: valueEmail, setValue: setEmail, ...restEmail } = useInput({type: "email"});
     const { value: valueAddress, setValue: setAddress, ...restAddress } = useInput({type: null});
 
-    const { positions } = React.useContext(GlobalCtx);
-    const {  setNotify, setShowModal, setRefresh } = React.useContext(GlobalCtx);
+    const { positions, setNotify, setShowModal, setRefresh } = React.useContext(GlobalCtx);
     const positionsSelect = positions.map(({id, name}) => ({id, value: name}));
 
     const [officeSelectId, setOfficeSelectId] = React.useState('0');

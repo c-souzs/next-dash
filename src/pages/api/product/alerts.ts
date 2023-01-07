@@ -1,13 +1,12 @@
 import { NextApiHandler } from "next";
-
-import prismadb from "../../../lib/prismadb";
+import { getAlerts } from "../../../lib/product/getAlerts";
 
 const handlerGet: NextApiHandler = async (req, res) => {
     try {
-        const positions = await prismadb.office.findMany();
+        const products = await getAlerts();
 
         return res.status(200).json({
-            data: { positions }
+            data: {...products}
         });
     } catch (e) {
         return res.status(401).json({
@@ -20,7 +19,7 @@ const handler: NextApiHandler = async (req, res) => {
     const { method } = req;
     
     switch (method) {
-        case 'GET':
+        case 'GET': 
             handlerGet(req, res);
             break;
         default:

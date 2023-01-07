@@ -1,4 +1,4 @@
-import { Office } from "@prisma/client";
+import { Category, Office } from "@prisma/client";
 import React, { createContext, ReactNode } from "react";
 import Modal from "../components/elements/Modal";
 import Notification from "../components/elements/Notification";
@@ -22,6 +22,8 @@ type GlobalCtxType = {
     setShowAside: React.Dispatch<React.SetStateAction<boolean>>;
     positions: Office[];
     setPositions: React.Dispatch<React.SetStateAction<Office[]>>;
+    categories: Category[];
+    setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 }
 
 const initialValue = {
@@ -40,6 +42,8 @@ const initialValue = {
         type: 'success'
     } as Notify,
     setNotify: () => {},
+    categories: [],
+    setCategories: () => {}
 }
 
 export const GlobalCtx = createContext<GlobalCtxType>(initialValue);
@@ -51,8 +55,9 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     const [showModal, setShowModal] = React.useState(initialValue.showModal);
     const [contentModal, setContentModal] = React.useState<ReactNode | null>(initialValue.contentModal);
     const [refresh, setRefresh] = React.useState(initialValue.refresh);
+    const [categories, setCategories] = React.useState<Category[]>(initialValue.categories);
 
-    const getDataEmployeePage = async () => {
+    const getOfficies = async () => {
         try {
             const listOfficies = await api.get<{data: { positions: Office[]} }>("office");
             
@@ -66,12 +71,23 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
         }
     }
 
+    const getCategories = async () => {
+        const listCategories = await api.get<{data: { categories: Category[] }}>("category");
+
+        if(listCategories.status !== 200) return;
+
+        const { data: { data: { categories } } } = listCategories;
+
+        setCategories(categories);
+    }
+
     React.useEffect(() => {
-        getDataEmployeePage();
+        getOfficies();
+        getCategories();
     }, []);
 
     return (
-        <GlobalCtx.Provider value={{ showAside, positions, notify, showModal, contentModal, refresh, setRefresh, setContentModal, setNotify, setShowModal, setPositions, setShowAside }}>
+        <GlobalCtx.Provider value={{ showAside, positions, notify, showModal, contentModal, refresh, categories, setCategories, setRefresh, setContentModal, setNotify, setShowModal, setPositions, setShowAside }}>
             <Notification show={notify.show} hideNotification={() => setNotify({show: false, type: 'success'})} type={notify.type}/>
             <Modal onClose={() => setShowModal(false)} show={showModal}>
                 {contentModal && contentModal}
