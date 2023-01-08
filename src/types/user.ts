@@ -28,3 +28,18 @@ export type UserContentModal = {
     type: "view" | "register" | "update";
     employeeSelect?: UserApi;
 }
+
+export type UserAlerts = {
+    frist: {
+        amount: number;
+        name: string;
+    };
+    second: {
+        amount: number;
+        name: string;
+    };
+    third: {
+        amount: number;
+        name: string;
+    };
+}
