@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000";
+const url = "https://next-dash-souzzs.vercel.app";
 
 const axiosInstance = axios.create({
   baseURL: `${url}/api`,
