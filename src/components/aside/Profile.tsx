@@ -16,7 +16,7 @@ const ProfileAside = () => {
         <div className="p-2">
             <p className={classNames("text-sm text-white-50 font-medium mb-1", {"hidden": !showAside})}>Deslogar:</p>
             <button
-                onClick={() => signOut()}
+                onClick={() => signOut({callbackUrl: "/login"})}
                 className="w-full flex items-center justify-center text-sm font-medium text-white-50 gap-2 p-2 py-1 rounded border border-black-700"
             >
                 <img src={image} alt={name} className="w-8"/>

@@ -54,11 +54,7 @@ export const authOptions: NextAuthOptions = {
 	},
 	jwt: {
 		maxAge: 3600,
-	},
-    pages: {
-        signIn: "/login",
-        signOut: "/"
-    }
+	}
 }
 
 export default NextAuth(authOptions);

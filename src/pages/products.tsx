@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import { unstable_getServerSession } from "next-auth";
+import Head from "next/head";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { ProductsProvider } from "../contexts/Products";
 
@@ -24,14 +25,19 @@ const Products = ({ products, cards, alerts }: ProductsProps) => {
     const { categories, spending } = cards;
     const { ending, excess, expectedProfit } = alerts;
     return (
-        <LayoutMain title="Produtos" >
-            <ProductsProvider>
-                <RegisterProducts />
-                <ProductAlerts ending={ending} excess={excess} expectedProfit={expectedProfit}/>
-                <CardsProducts categories={categories} spending={spending}/>
-                <TableProducts products={products}/>
-            </ProductsProvider>
-        </LayoutMain>
+        <>
+            <Head>
+                <title>Produtos - Dash next</title>
+            </Head>
+            <LayoutMain title="Produtos" >
+                <ProductsProvider>
+                    <RegisterProducts />
+                    <ProductAlerts ending={ending} excess={excess} expectedProfit={expectedProfit}/>
+                    <CardsProducts categories={categories} spending={spending}/>
+                    <TableProducts products={products}/>
+                </ProductsProvider>
+            </LayoutMain>
+        </>
     )
 }
 

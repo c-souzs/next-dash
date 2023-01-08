@@ -13,7 +13,7 @@ const Notification = ({ type, hideNotification, show }: NotificationProps) => {
     
     useInterval(() => {
         hideNotification();
-    }, type === "failure" ? 10000 : 5000);
+    }, type === "failure" ? 7000 : 5000);
 
     return (
         <>
