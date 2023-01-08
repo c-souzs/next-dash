@@ -48,11 +48,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res } = context;
     const session = await unstable_getServerSession(req, res, authOptions);
 
-    if(!(session )) {
-        return {
-            redirect: { destination: '/', permanent: true }
-        }
-    }
+    if(!session ) return ({ redirect: { destination: '/login', permanent: true } });
+    
     const sales = await getAllSales();
     const cards = await getCardsSales();
     const alerts = await getAlertsSales();
