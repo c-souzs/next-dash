@@ -44,6 +44,13 @@ const handlerDelete: NextApiHandler = async (req, res) => {
     const { ids } = req.body as { ids: number[] };
     
     try {
+        await prismadb.sale.deleteMany({
+            where: {
+                productId: {
+                    in: ids
+                }
+            }
+        });
         const productsDelete = await prismadb.product.deleteMany({
             where: {
                 id: {

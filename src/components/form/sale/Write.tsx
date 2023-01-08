@@ -14,6 +14,7 @@ import { fakeProps } from "../../../utils/global";
 import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
+import Error from "../Error";
 
 const SaleWrite = ({type, saleSelect}: SaleContentModal) => {
     const { value: valueAmount, setValue: setAmount, ...restAmount } = useInput({type: null});
@@ -22,13 +23,14 @@ const SaleWrite = ({type, saleSelect}: SaleContentModal) => {
     
     const { products } = React.useContext(GlobalCtx);
     
-    const optionsProducts = products.map(({id, name}) => ({id, value: name}));
+    const optionsProducts = products.filter(({amount}) => amount > 0).map(({id, name}) => ({id, value: name}));
     const [date, setDate] = React.useState('');
     const [value, setValue] = React.useState('');
 
     const { setNotify, setShowModal, setRefresh } = React.useContext(GlobalCtx);
     const {data: session} = useSession();
     const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState<null | string>(null);
 
     React.useEffect(() => {
         const date = new Date();
@@ -51,21 +53,30 @@ const SaleWrite = ({type, saleSelect}: SaleContentModal) => {
 
         const { saleValue } = dataProduct;
         const saleValueTotal = Number(valueAmount) * saleValue;
-        setValue(saleValueTotal.toString());
+
+        setValue(saleValueTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
 
     }, [productId, valueAmount]);
 
     const handleSubmitSaleWrite = async (e: FormEvent) => {
         e.preventDefault();
         
+        if(productId === "0" || valueAmount === "") {
+            setError("Campos incompletos.");
+
+            return;
+        }
+
         const { user } = session!;
         const { id } = user! as AuthUser;
+
+        const clearMoney = (value: string) => Number(value.substring(3).replace(",", "."));
 
         const dataSale = {
             amount: Number(valueAmount),
             productId: Number(productId),
             userId: id,
-            value: Number(value)
+            value: clearMoney(value)
         }
 
         try {
@@ -97,10 +108,11 @@ const SaleWrite = ({type, saleSelect}: SaleContentModal) => {
         <form className="flex flex-col gap-4" onSubmit={handleSubmitSaleWrite}>
             <Select label="Produto" value={productId} setValue={setProductId} options={optionsProducts}/>
             <div className="flex gap-6">
-                <Input label="Quantidade" value={valueAmount} setValue={setAmount} {...restAmount} />
+                <Input label="Quantidade" type="number" value={valueAmount} setValue={setAmount} {...restAmount} />
                 <Input label="Data" type="date" value={date} {...fakeProps}/>
             </div>
             {productId !== "0" && valueAmount !== "" && <Input label="Valor" value={value} {...fakeProps}/>}
+            {error && <Error>{error}</Error>}
             <Button disabled={loading}>Vender</Button>
         </form>
     )

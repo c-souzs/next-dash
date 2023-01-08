@@ -7,6 +7,19 @@ const handlerPost: NextApiHandler = async (req, res) => {
     const { amount, productId, userId, value } = req.body;
     
     try {
+        const productSale = await prismadb.product.findUnique({
+            where: {
+                id: productId
+            },
+            select: {
+                amount: true
+            }
+        });
+        
+        if(productSale && productSale.amount < amount){
+            throw new Error("Quantidade de produtos acima do que contém no estoque.");
+        }
+        
         const sale = await prismadb.sale.createMany({
             data: {
                 amount, productId, userId, value
@@ -19,6 +32,16 @@ const handlerPost: NextApiHandler = async (req, res) => {
             data: {
                 amountSales: {
                     increment: 1
+                }
+            }
+        });
+        await prismadb.product.update({
+            where: {
+                id: productId
+            },
+            data: {
+                amount: {
+                    decrement: amount
                 }
             }
         });
@@ -69,7 +92,7 @@ const handlerDelete: NextApiHandler = async (req, res) => {
                     decrement: 1
                 }
             }
-        })
+        });
 
         return res.status(200).json({
             data: sales

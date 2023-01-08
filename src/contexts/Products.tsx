@@ -34,13 +34,21 @@ export const ProductCtx = createContext<ProductCtxType>(initialValue);
 export const ProductsProvider = ({ children }: ProductProviderProps) => {
     const [cards, setCards] = React.useState(initialValue.cards);
     const [alerts, setAlerts] = React.useState(initialValue.alerts);
-    const { refresh, setRefresh } = React.useContext(GlobalCtx);
+    
+    const { refresh, setRefresh, setNotify } = React.useContext(GlobalCtx);
 
     const refreshItems = async () => {
         const listCards = await api.get<{data: ProductCards}>("product/cards");
         const listAlerts = await api.get<{data: ProductAlertsType}>("product/alerts");
 
-        if(listCards.status !== 200 && listAlerts.status !== 200) return;
+        if(listCards.status !== 200 && listAlerts.status !== 200) {
+            setNotify({
+                show: true,
+                type: "failure"
+            });
+
+            return;
+        };
 
         const { data: { data: dataListCards } } = listCards;
         const { data: { data: dataAlerts } } = listAlerts;

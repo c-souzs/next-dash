@@ -1,9 +1,7 @@
 import React from "react";
+
 import { EmployeeCtx } from "../../contexts/Employee";
-import { SaleCtx } from "../../contexts/Sale";
-import { SaleAlerts } from "../../types/sale";
 import { UserAlerts } from "../../types/user";
-import { formatBr } from "../../utils/formatDate";
 import Alert from "../elements/Alert";
 
 type AlertsEmployeesProps = {

@@ -1,7 +1,7 @@
-import { User } from "@prisma/client";
 import React, { FormEvent } from "react";
-import { EmployeeCtx } from "../../../contexts/Employee";
+import { User } from "@prisma/client";
 import { GlobalCtx } from "../../../contexts/Global";
+
 import useInput from "../../../hooks/useInput";
 import { UserApi, UserContentModal } from "../../../types/user";
 import { api } from "../../../utils/api";
@@ -10,6 +10,7 @@ import { colorsFem, colorsMasc, fakeProps, optionsSex } from "../../../utils/glo
 import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
+import Error from "../Error";
 
 const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
     const { value: valueName, setValue: setName, ...restName } = useInput({type: null});
@@ -25,7 +26,7 @@ const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
     const [sexSelectId, setSexSelectId] = React.useState('0');
 
     const [loading, setLoading] = React.useState(false);
-
+    const [error, setError] = React.useState<null | string>(null);
 
     React.useEffect(() => {
         if(officeSelectId === "0") return;
@@ -58,6 +59,12 @@ const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
 
     const handleSubmitEmployeeWrite = async(e: FormEvent) => {
         e.preventDefault();
+
+        if(officeSelectId === "0" || sexSelectId === "0" || valueName === "" || valueAddress === "" || valueEmail === ""){
+            setError("Campos incompletos.");
+
+            return;
+        }
 
         const colorsImage = sexSelectId === "1" ? colorsMasc.join(",") as string : colorsFem.join(",") as string;
         const dataEmployee = {
@@ -109,6 +116,7 @@ const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
                 {salaray !== "" && <Input label="Salário" value={salaray} {...fakeProps}/>}
                 <Input label="Data da contratação" type="date" value={date} {...fakeProps} />
             </div>
+            {error && <Error>{error}</Error>}
             <Button disabled={loading}> Contratar </Button>
         </form>
     )

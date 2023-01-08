@@ -4,6 +4,18 @@ const rgxs = {
     email: {
         rgx: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
         message: "Preencha um e-mail válido"
+    },
+    money: {
+        rgx: /^^/,
+        message: "",
+        mask: (value: string) => {
+            const clearValue = value.replace("R$ ", "").replace(",", ".");
+            const valueNumber = Number(clearValue);
+
+            const mask = valueNumber.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            
+            return mask;
+        }
     }
 }
 
@@ -29,6 +41,11 @@ const useInput = ({ type }: TUseInputParams) => {
             return false;
         }
 
+        if(type === "money"){
+            const mask = rgxs.money.mask(enteredValue);
+            setValue(mask);
+        }
+
         setError(null);
         return true;
     }
@@ -37,11 +54,16 @@ const useInput = ({ type }: TUseInputParams) => {
         const elementValue = e.target.value;
     
         if (error) validate(elementValue);
-        // Formatar o valor baseado no type
         setValue(elementValue);
     };
 
-    const onClick = (): void => setError(null);
+    const onClick = (): void => {
+        if(type === "money"){
+            const clearValue = value.substring(3);
+            setValue(clearValue);
+        }
+        setError(null);
+    };
 
     return {
         value,
@@ -50,7 +72,7 @@ const useInput = ({ type }: TUseInputParams) => {
         onClick,
         validateAt: () => validate(value),
         error,
-      };
+    };
 }
 
 export default useInput;

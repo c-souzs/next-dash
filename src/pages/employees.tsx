@@ -1,14 +1,16 @@
 import { GetServerSideProps } from "next";
 import { unstable_getServerSession } from "next-auth";
+import { EmployeeProvider } from "../contexts/Employee";
+import { authOptions } from "./api/auth/[...nextauth]";
+
 import AlertsEmployees from "../components/employees/Alerts";
 import RegisterEmployees from "../components/employees/Register";
 import TableEmployees from "../components/employees/Table";
 import LayoutMain from "../components/layout/Main";
-import { EmployeeProvider } from "../contexts/Employee";
+
 import { getAllUsers } from "../lib/user/getAll";
 import { getBests } from "../lib/user/getBests";
 import { UserAlerts, UserApi } from "../types/user";
-import { authOptions } from "./api/auth/[...nextauth]";
 
 type EmployeesProps = {
     employees: UserApi[];

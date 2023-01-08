@@ -1,7 +1,9 @@
-import { Prisma, Product } from "@prisma/client";
 import React from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
+import { Prisma, Product } from "@prisma/client";
 import { GlobalCtx } from "../../contexts/Global";
+
+import DataTable, { TableColumn } from "react-data-table-component";
+
 import { ProductApi } from "../../types/product";
 import { api } from "../../utils/api";
 import { formatEua } from "../../utils/formatDate";

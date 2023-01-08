@@ -55,11 +55,12 @@ export const GlobalCtx = createContext<GlobalCtxType>(initialValue);
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     const [showAside, setShowAside] = React.useState(initialValue.showAside);
-    const [positions, setPositions] = React.useState<Office[]>(initialValue.positions);
     const [notify, setNotify] = React.useState(initialValue.notify);
     const [showModal, setShowModal] = React.useState(initialValue.showModal);
     const [contentModal, setContentModal] = React.useState<ReactNode | null>(initialValue.contentModal);
     const [refresh, setRefresh] = React.useState(initialValue.refresh);
+    
+    const [positions, setPositions] = React.useState<Office[]>(initialValue.positions);
     const [categories, setCategories] = React.useState<Category[]>(initialValue.categories);
     const [products, setProducts] = React.useState<ProductApi[]>(initialValue.products);
 
@@ -67,7 +68,14 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
         try {
             const listOfficies = await api.get<{data: { positions: Office[]} }>("office");
             
-            if(listOfficies.status !== 200) return;
+            if(listOfficies.status !== 200) {
+                setNotify({
+                    show: true,
+                    type: "failure"
+                });
+
+                return;
+            };
 
             const { data: { data: { positions } } } = listOfficies;
             
@@ -80,7 +88,14 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     const getCategories = async () => {
         const listCategories = await api.get<{data: { categories: Category[] }}>("category");
 
-        if(listCategories.status !== 200) return;
+        if(listCategories.status !== 200) {
+            setNotify({
+                show: true,
+                type: "failure"
+            });
+
+            return;
+        };
 
         const { data: { data: { categories } } } = listCategories;
 
@@ -90,7 +105,14 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     const getProducts = async () => {
         const listProducts = await api.get<{data: ProductApi[]}>("product");
 
-        if(listProducts.status !== 200) return;
+        if(listProducts.status !== 200) {
+            setNotify({
+                show: true,
+                type: "failure"
+            });
+            
+            return;
+        };
 
         const { data: { data: dataListProducts } } = listProducts;
 

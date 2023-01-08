@@ -44,14 +44,21 @@ export const SaleProvider = ({ children }: SaleProviderProps) => {
     const [cards, setCards] = React.useState(initialValue.cards);
     const [alerts, setAlerts] = React.useState(initialValue.alerts);
 
-    const { refresh, setRefresh } = React.useContext(GlobalCtx);
+    const { refresh, setRefresh, setNotify } = React.useContext(GlobalCtx);
 
     const refreshItems = async () => {
         const listSales = await api.get<{data: SaleApi[]}>("sale");
         const listCards = await api.get<{data: SaleCards}>("sale/cards");
         const listAlerts = await api.get<{data: SaleAlerts}>("sale/alerts");
 
-        if(listSales.status !== 200 && listCards.status !== 200 && listAlerts.status !== 200) return;
+        if(listSales.status !== 200 && listCards.status !== 200 && listAlerts.status !== 200) {
+            setNotify({
+                show: true,
+                type: "failure"
+            });
+
+            return;
+        };
 
         const { data: { data: dataListSales } } = listSales;
         const { data: { data: { categories, value } } } = listCards;

@@ -31,13 +31,21 @@ export const EmployeeCtx = createContext<EmployeeCtxType>(initialValue);
 export const EmployeeProvider = ({ children }: EmployeeProviderProps) => {
     const [employees, setEmployees] = React.useState<UserApi[]>(initialValue.employees);
     const [alerts, setAlerts] = React.useState<UserAlerts>(initialValue.alerts);
-    const { refresh, setRefresh } = React.useContext(GlobalCtx);
+    
+    const { refresh, setRefresh, setNotify } = React.useContext(GlobalCtx);
 
     const refreshItems = async () => {
         const listEmployees = await api.get<{data: UserApi[]}>("user");
         const listAlerts = await api.get<{data: UserAlerts}>("user/bests");
         
-        if(listEmployees.status !== 200) return;
+        if(listEmployees.status !== 200 && listAlerts.status !== 200) {
+            setNotify({
+                show: true,
+                type: "failure"
+            });
+
+            return;
+        };
 
         const { data: { data: dataListEmployees } } = listEmployees;
         const { data: { data: dataListAlerts } } = listAlerts;

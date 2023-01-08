@@ -1,11 +1,13 @@
 import { GetServerSideProps } from "next"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
+import { SaleProvider } from "../contexts/Sale";
+
 import LayoutMain from "../components/layout/Main";
 import AlertsSales from "../components/sales/Alerts";
 import CardsSales from "../components/sales/Cards";
 import RegisterSales from "../components/sales/Register";
 import TableSale from "../components/sales/Table";
-import { SaleProvider } from "../contexts/Sale";
+
 import { getAlertsSales } from "../lib/sale/getAlerts";
 import { getAllSales } from "../lib/sale/getAll";
 import { getCardsSales } from "../lib/sale/getCards";
@@ -39,17 +41,17 @@ const Sales = ({ sales, cards, alerts }: SalesProps) => {
 export default Sales;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
+    const { req, res } = context;
 
-  const sales = await getAllSales();
-  const cards = await getCardsSales();
-  const alerts = await getAlertsSales();
+    const sales = await getAllSales();
+    const cards = await getCardsSales();
+    const alerts = await getAlertsSales();
 
-  return {
-      props: {
-        sales: JSON.parse(JSON.stringify(sales)),
-        cards, 
-        alerts: JSON.parse(JSON.stringify(alerts))
-      }
-  }
+    return {
+        props: {
+            sales: JSON.parse(JSON.stringify(sales)),
+            cards, 
+            alerts: JSON.parse(JSON.stringify(alerts))
+        }
+    }
 }

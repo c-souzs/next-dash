@@ -1,7 +1,9 @@
-import { Prisma, Sale } from "@prisma/client";
 import React from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
+import { Prisma, Sale } from "@prisma/client";
 import { GlobalCtx } from "../../contexts/Global";
+
+import DataTable, { TableColumn } from "react-data-table-component";
+
 import { SaleCtx } from "../../contexts/Sale";
 import { SaleApi } from "../../types/sale";
 import { api } from "../../utils/api";
@@ -130,6 +132,5 @@ const TableSale = ({ sales }: TableSaleProps) => {
         </div>
     )
 }
-
 
 export default TableSale;

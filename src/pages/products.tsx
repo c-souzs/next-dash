@@ -1,16 +1,18 @@
 import { GetServerSideProps } from "next";
 import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { ProductsProvider } from "../contexts/Products";
+
 import LayoutMain from "../components/layout/Main";
 import ProductAlerts from "../components/products/Alerts";
 import CardsProducts from "../components/products/Cards";
 import RegisterProducts from "../components/products/Register";
 import TableProducts from "../components/products/Table";
-import { ProductsProvider } from "../contexts/Products";
+
 import { getAlerts } from "../lib/product/getAlerts";
 import { getAllProducts } from "../lib/product/getAll";
 import { getCards } from "../lib/product/getCards";
 import { ProductAlertsType, ProductApi, ProductCards } from "../types/product";
-import { authOptions } from "./api/auth/[...nextauth]";
 
 type ProductsProps = {
     products: ProductApi[];
