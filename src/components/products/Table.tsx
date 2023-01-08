@@ -6,10 +6,11 @@ import DataTable, { TableColumn } from "react-data-table-component";
 
 import { ProductApi } from "../../types/product";
 import { api } from "../../utils/api";
-import { formatEua } from "../../utils/formatDate";
+import { formatBr } from "../../utils/formatDate";
 import { customStylesTable } from "../../utils/table";
 import StructureTable from "../elements/Table";
 import ContentModalProduct from "./ContentModal";
+import generatePdf from "../../utils/generatePdf";
 
 type TableProductsProps = {
     products: ProductApi[]
@@ -48,7 +49,7 @@ const columns: TableColumn<DataRow>[] = [
     },
     {
         name: 'Data de compra',
-        selector: (row) => formatEua(new Date(row.register)),
+        selector: (row) => formatBr(new Date(row.register)),
     },
     {
         name: 'Preço de compra',
@@ -111,7 +112,17 @@ const TableProducts = ({ products }: TableProductsProps) => {
     }
 
     const generatePdfProducts = () => {
-        
+        const heads = ['Id', 'Nome', 'Categoria', 'Quantidade', 'Data de compra', 'Preço de compra', 'Preço de venda'];
+
+        const body = productsCtx.map(product => {
+            const { id, name, category, amount, register, saleValue, purchasePrice } = product;
+            const { name: nameCategory } = category;
+            const dateFormat = formatBr(new Date(register));
+
+            return [id, name, nameCategory, amount, dateFormat, purchasePrice, saleValue];
+        });
+
+        generatePdf('Seus produtos', heads, body, 'products');
     }
 
     return (

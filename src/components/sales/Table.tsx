@@ -7,10 +7,11 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { SaleCtx } from "../../contexts/Sale";
 import { SaleApi } from "../../types/sale";
 import { api } from "../../utils/api";
-import { formatEua } from "../../utils/formatDate";
+import { formatBr } from "../../utils/formatDate";
 import { customStylesTable } from "../../utils/table";
 import StructureTable from "../elements/Table";
 import ContentModalSale from "./ContentModal";
+import generatePdf from "../../utils/generatePdf";
 
 type TableSaleProps = {
     sales: SaleApi[]
@@ -58,7 +59,7 @@ const columns: TableColumn<DataRow>[] = [
     },
     {
         name: 'Data',
-        selector: (row) => formatEua(new Date(row.register)),
+        selector: (row) => formatBr(new Date(row.register)),
         sortable: true,
     }
 ];
@@ -113,7 +114,18 @@ const TableSale = ({ sales }: TableSaleProps) => {
     }
 
     const generatePdfSales = () => {
-        
+        const heads = ['Id', 'Nome', 'Categoria', 'Quantidade', 'Valor', 'Funcionário', 'Data'];
+
+        const body = salesCtx.map(sale => {
+            const { id, product, amount, value, user, register } = sale;
+            const { name: nameProduct, category: { name: nameCategory } } = product;
+            const { name: nameEmployee } = user;
+            const dateFormat = formatBr(new Date(register));
+
+            return [id, nameProduct, nameCategory, amount, value, nameEmployee, dateFormat];
+        });
+
+        generatePdf('Suas vendas', heads, body, 'sales');
     }
 
     return (

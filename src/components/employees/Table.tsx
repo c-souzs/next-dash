@@ -9,6 +9,8 @@ import { api } from "../../utils/api";
 import { customStylesTable } from "../../utils/table";
 import StructureTable from "../elements/Table";
 import ContentModalEmployee from "./ContentModal";
+import { formatBr } from "../../utils/formatDate";
+import generatePdf from "../../utils/generatePdf";
 
 type TableEmployeesProps = {
     employees: UserApi[]
@@ -44,6 +46,11 @@ const columns: TableColumn<DataRow>[] = [
         name: 'Endereço',
         selector: (row) => row.address,
         sortable: true,
+    },
+    {
+        name: 'Contratação',
+        selector: (row) => formatBr(new Date(row.register)),
+        sortable: true
     },
     {
         name: 'Cargo',
@@ -112,7 +119,18 @@ const TableEmployees = ({ employees }: TableEmployeesProps) => {
     }
 
     const generatePdfEmployees = () => {
+        const heads = ['Id', 'Nome', 'Email', 'Contratação', 'Endereço', 'Cargo', 'Salário', 'Vendas'];
         
+        const body = employeesCtx.map(employee => {
+            const { id, name, login, address, office, amountSales, register } = employee;
+            const { email } = login!;
+            const { name: nameOffice, salary } = office;
+            const dateFormat = formatBr(new Date(register));
+
+            return [id, name, email, dateFormat, address, nameOffice, salary, amountSales]
+        });
+
+        generatePdf('Seus funcionários', heads, body, 'employees');
     }
 
     return (
