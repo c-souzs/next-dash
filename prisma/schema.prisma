@@ -47,6 +47,8 @@ model User {
 
   login Login?
 
+  sales Sale[]
+
   officeId Int
   office   Office @relation(fields: [officeId], references: [id])
 
@@ -74,6 +76,24 @@ model Product {
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 
+  sales Sale[]
+
   @@index([categoryId])
   @@map("product")
+}
+
+model Sale {
+  id        Int      @id @default(autoincrement())
+  amount    Int
+  register  DateTime @default(now())
+  value     Float
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  @@index([productId])
+  @@index([userId])
+  @@map("sale")
 }

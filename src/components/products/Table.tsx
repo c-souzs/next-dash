@@ -2,7 +2,6 @@ import { Prisma, Product } from "@prisma/client";
 import React from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { GlobalCtx } from "../../contexts/Global";
-import { ProductCtx } from "../../contexts/Products";
 import { ProductApi } from "../../types/product";
 import { api } from "../../utils/api";
 import { formatEua } from "../../utils/formatDate";
@@ -63,8 +62,7 @@ const columns: TableColumn<DataRow>[] = [
 ];
 
 const TableProducts = ({ products }: TableProductsProps) => {
-    const { products: productsCtx, setProducts } = React.useContext(ProductCtx);
-    const { setNotify, setContentModal, setShowModal, setRefresh } = React.useContext(GlobalCtx);
+    const { setProducts, products: productsCtx, setNotify, setContentModal, setShowModal, setRefresh } = React.useContext(GlobalCtx);
 
     React.useEffect(() => setProducts(products), []);
 

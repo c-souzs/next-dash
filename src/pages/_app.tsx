@@ -21,10 +21,10 @@ ChartJS.register(CategoryScale, LinearScale, ArcElement, BarElement, PointElemen
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <GlobalProvider>
-      <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <GlobalProvider>
         <Component {...pageProps} />
-      </SessionProvider>
-    </GlobalProvider>
+      </GlobalProvider>
+    </SessionProvider>
   )
 }

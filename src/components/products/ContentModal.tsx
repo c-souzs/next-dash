@@ -1,4 +1,4 @@
-import { Money } from "phosphor-react";
+import { Package } from "phosphor-react";
 import { ProductContentModal } from "../../types/product";
 
 import HeaderModal from "../elements/Modal/Header";
@@ -9,7 +9,7 @@ const ContentModalProduct = ({type, productSelect}: ProductContentModal) => {
     return (
         <>
             <HeaderModal 
-                    icon={Money}
+                    icon={Package}
                     title="Informações de venda"
             />
             {type === "view" && <ProductRead productSelect={productSelect}/>}
