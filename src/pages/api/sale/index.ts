@@ -1,10 +1,19 @@
 import { NextApiHandler } from "next";
+import { unstable_getServerSession } from "next-auth";
 
 import prismadb from "../../../lib/prismadb";
 import { getAllSales } from "../../../lib/sale/getAll";
+import { authOptions } from "../auth/[...nextauth]";
 
 const handlerPost: NextApiHandler = async (req, res) => {
     const { amount, productId, userId, value } = req.body;
+    const session = await unstable_getServerSession(req, res, authOptions);
+
+    if(!session){
+        return res.status(401).json({
+            message: "Você não tem permissão para acessar esses dados."
+        });
+    }
     
     try {
         const productSale = await prismadb.product.findUnique({
@@ -57,6 +66,14 @@ const handlerPost: NextApiHandler = async (req, res) => {
 }
 
 const handlerGet: NextApiHandler = async (req, res) => {
+    const session = await unstable_getServerSession(req, res, authOptions);
+
+    if(!session){
+        return res.status(401).json({
+            message: "Você não tem permissão para acessar esses dados."
+        });
+    }
+
     try {
         const sales = await getAllSales();
 
@@ -72,6 +89,13 @@ const handlerGet: NextApiHandler = async (req, res) => {
 
 const handlerDelete: NextApiHandler = async (req, res) => {
     const { ids, idsUser } = req.body as { ids: number[], idsUser: number[] };
+    const session = await unstable_getServerSession(req, res, authOptions);
+
+    if(!session){
+        return res.status(401).json({
+            message: "Você não tem permissão para acessar esses dados."
+        });
+    }
 
     try {
         const sales = await prismadb.sale.deleteMany({
