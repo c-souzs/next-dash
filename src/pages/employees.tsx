@@ -14,6 +14,7 @@ import { getBests } from "../lib/user/getBests";
 import { AuthUser, UserAlerts, UserApi } from "../types/user";
 import { useSession } from "next-auth/react";
 import React, { use } from "react";
+import { encodePassword } from "../utils/bcrypt";
 
 type EmployeesProps = {
     employees: UserApi[];
@@ -45,7 +46,6 @@ const Employees = ({ employees, alerts }: EmployeesProps) => {
                     true ? (
                         <EmployeeProvider>
                             <RegisterEmployees />
-                            <AlertsEmployees data={alerts}/>
                             <TableEmployees employees={employees}/>
                         </EmployeeProvider>
                     ) : (
@@ -69,12 +69,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     //if(!session ) return ({ redirect: { destination: '/login', permanent: true } });
 
     const employees = await getAllUsers();
-    const alerts = await getBests();
-
+    //const alerts = await getBests();
+    console.log(encodePassword('caiohsouza2002@gmail.com'));
+    
     return {
         props: {
             employees: JSON.parse(JSON.stringify(employees)),
-            alerts
+            //alerts
         }
     }
 }

@@ -11,6 +11,7 @@ import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
 import Error from "../Error";
+import { encodePassword } from "../../../utils/bcrypt";
 
 const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
     const { value: valueName, setValue: setName, ...restName } = useInput({type: null});
@@ -60,11 +61,11 @@ const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
     const handleSubmitEmployeeWrite = async(e: FormEvent) => {
         e.preventDefault();
 
-        if(officeSelectId === "0" || sexSelectId === "0" || valueName === "" || valueAddress === "" || valueEmail === ""){
-            setError("Campos incompletos.");
+        // if(officeSelectId === "0" || sexSelectId === "0" || valueName === "" || valueAddress === "" || valueEmail === ""){
+        //     setError("Campos incompletos.");
 
-            return;
-        }
+        //     return;
+        // }
 
         const colorsImage = sexSelectId === "1" ? colorsMasc.join(",") as string : colorsFem.join(",") as string;
         const dataEmployee = {
@@ -73,9 +74,9 @@ const EmployeeWrite = ({type, employeeSelect}: UserContentModal) => {
             address: valueAddress,
             image: `https://source.boringavatars.com/beam/120/${valueEmail}?colors=${colorsImage}`, 
             sex: sexSelectId === '1' || false,
-            officeId: Number(officeSelectId),
+            officeId: 2,
         }
-
+        
         try {
             if(type == "update" && employeeSelect){
                 const { id } = employeeSelect;

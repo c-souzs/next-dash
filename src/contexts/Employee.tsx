@@ -36,9 +36,9 @@ export const EmployeeProvider = ({ children }: EmployeeProviderProps) => {
 
     const refreshItems = async () => {
         const listEmployees = await api.get<{data: UserApi[]}>("user");
-        const listAlerts = await api.get<{data: UserAlerts}>("user/bests");
+        //const listAlerts = await api.get<{data: UserAlerts}>("user/bests");
         
-        if(listEmployees.status !== 200 && listAlerts.status !== 200) {
+        if(listEmployees.status !== 200 ) {
             setNotify({
                 show: true,
                 type: "failure"
@@ -48,9 +48,9 @@ export const EmployeeProvider = ({ children }: EmployeeProviderProps) => {
         };
 
         const { data: { data: dataListEmployees } } = listEmployees;
-        const { data: { data: dataListAlerts } } = listAlerts;
+        //const { data: { data: dataListAlerts } } = listAlerts;
         
-        setAlerts(dataListAlerts);
+        //setAlerts(dataListAlerts);
         setEmployees(dataListEmployees);
         setRefresh(false);
     }
