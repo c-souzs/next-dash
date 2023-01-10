@@ -36,14 +36,6 @@ const handlerPost: NextApiHandler = async (req, res) => {
 }
 
 const handlerGet: NextApiHandler = async (req, res) => {
-    const session = await unstable_getServerSession(req, res, authOptions);
-
-    if(!session){
-        return res.status(401).json({
-            message: "Você não tem permissão para acessar esses dados."
-        });
-    }
-
     try {
         const products = await getAllProducts();
 
