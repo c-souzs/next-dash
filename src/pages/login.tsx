@@ -56,7 +56,7 @@ const Login = () => {
                 matchResponsive ? (
                     <ResponsiveAlert />
                 ) : (
-                    <main className="h-screen bg-black-800 flex items-center justify-center">
+                    <main className="h-screen bg-black-800 flex flex-col items-center justify-center">
                         <section className="bg-black-700 rounded px-10 py-6">
                             <div>
                                 <form onSubmit={handleLogin} className="flex flex-col gap-y-4 min-w-[360px]">
@@ -67,6 +67,9 @@ const Login = () => {
                                 </form>
                             </div>
                         </section>
+                            <div>
+                                <span className="text-white-500 font-semibold block mt-2">Usuário e senha padrão: user@gmail.com</span>
+                            </div>
                      </main>
                 )
             }

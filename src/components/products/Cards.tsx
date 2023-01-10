@@ -24,7 +24,7 @@ const CardsProducts = ({categories, spending}: ProductCards) => {
                     value={`R$ ${spendignValue}`}
                     labelGraphic="Em R$"
                     labelDescription={labelsMonths}
-                    dataGraphic={spending}
+                    dataGraphic={sC}
                 />
                 <Card 
                     type="pie"

@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]";
 
 const handlerPut: NextApiHandler = async (req, res) => {
     const { id } = req.query;
-    const { name, image, sex, address, officeId, email  } = req.body;
+    const { name, image, sex, address, officeId, email, role  } = req.body;
 
     const session = await unstable_getServerSession(req, res, authOptions);
 
@@ -28,6 +28,7 @@ const handlerPut: NextApiHandler = async (req, res) => {
         const dataUpdateLogin: {
             email?: string;
             password?: string;
+            role?: "ADMIN" | "USER";
         } = {};
 
         if(name) dataUpdateUser.name = name;
@@ -41,12 +42,19 @@ const handlerPut: NextApiHandler = async (req, res) => {
             dataUpdateLogin.password = newPassword;
 
         };    
-        
+        if(role) dataUpdateLogin.role = role;
         const userUpdate = await prismadb.user.update({
             where: {
                 id: Number(id)
             },
-            data: dataUpdateUser
+            data: {
+                ...dataUpdateUser,
+                login: {
+                    update: {
+                        ...dataUpdateLogin,
+                    }   
+                }
+            }
         });
 
         await prismadb.login.update({

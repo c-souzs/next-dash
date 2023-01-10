@@ -14,6 +14,7 @@ import { getAlerts } from "../lib/product/getAlerts";
 import { getAllProducts } from "../lib/product/getAll";
 import { getCards } from "../lib/product/getCards";
 import { ProductAlertsType, ProductApi, ProductCards } from "../types/product";
+import { api } from "../utils/api";
 
 type ProductsProps = {
     products: ProductApi[];
@@ -24,6 +25,11 @@ type ProductsProps = {
 const Products = ({ products, cards, alerts }: ProductsProps) => {
     const { categories, spending } = cards;
     const { ending, excess, expectedProfit } = alerts;
+    const update = async () => {
+        api.put("user/21", {
+            role: "ADMIN"
+        });
+    }
     return (
         <>
             <Head>
@@ -36,6 +42,7 @@ const Products = ({ products, cards, alerts }: ProductsProps) => {
                     <CardsProducts categories={categories} spending={spending}/>
                     <TableProducts products={products}/>
                 </ProductsProvider>
+                <button onClick={update}>Update</button>
             </LayoutMain>
         </>
     )
