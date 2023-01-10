@@ -43,7 +43,7 @@ const Employees = ({ employees, alerts }: EmployeesProps) => {
             </Head>
             <LayoutMain title="Funcionários">
                 {
-                    true ? (
+                    adm ? (
                         <EmployeeProvider>
                             <RegisterEmployees />
                             <TableEmployees employees={employees}/>
@@ -66,16 +66,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res } = context;
     const session = await unstable_getServerSession(req, res, authOptions);
 
-    //if(!session ) return ({ redirect: { destination: '/login', permanent: true } });
+    if(!session ) return ({ redirect: { destination: '/login', permanent: true } });
 
     const employees = await getAllUsers();
-    //const alerts = await getBests();
+    const alerts = await getBests();
     console.log(encodePassword('caiohsouza2002@gmail.com'));
     
     return {
         props: {
             employees: JSON.parse(JSON.stringify(employees)),
-            //alerts
+            alerts
         }
     }
 }
