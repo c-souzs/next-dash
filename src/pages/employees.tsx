@@ -42,7 +42,7 @@ const Employees = ({ employees, alerts }: EmployeesProps) => {
             </Head>
             <LayoutMain title="Funcionários">
                 {
-                    adm ? (
+                    true ? (
                         <EmployeeProvider>
                             <RegisterEmployees />
                             <AlertsEmployees data={alerts}/>
