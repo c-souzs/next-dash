@@ -1,10 +1,10 @@
-<p><h1 align="center">📱 Dash Next 🛒 </h1></p>
+<p><h1 align="center">👕 Dash Next 🛒 </h1></p>
 <p align="center">Dashboard para gerenciando de uma loja de roupas fictícia.</p>
 
 <p align="center">
  <a href="#sobre">Sobre</a> •
  <a href="#aprendizados">Aprendizados</a> •
- <a href="#tecnologias">Tecnologias</a>
+ <a href="#tecnologias">Tecnologias</a> •
   <a href="#autor">Autor</a>
 </p>
 
