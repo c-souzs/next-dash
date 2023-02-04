@@ -10,12 +10,12 @@
 
 <div id="sobre">
   <h1>📎 Sobre. </h1>
-  <p> A dashboard desenvolvida contém um sistema CRUD completo com integração ao banco de dados serverless. Nela é possível cadastrar, atualizar, deletar e vizulizar inforamções de produtos, vendas e funcionários. Com gráficos interativos e informações customizadas ela facilita a interpertação dos dados. Á também o sistema de tabelas e pdfs, onde baseado nas informações cadastradas o usuário emite um pdf com esses dados. Todas essas funcionalidades foram desenvolvidas por mim com o objetivo de aprofundar meus conhecimentos nas tecnologias do ecossistema java script.    
+  <p>A dashboard foi desenvolvida com um sistema CRUD completo e integração com um banco de dados serverless. É possível cadastrar, atualizar, excluir e visualizar informações sobre produtos, vendas e funcionários. Ela também oferece gráficos interativos e informações personalizadas para ajudar na interpretação dos dados. Além disso, existe um sistema de tabelas e PDFs, que permite gerar um PDF com as informações cadastradas. Estas funcionalidades foram desenvolvidas por mim com o objetivo de aprimorar meus conhecimentos nas tecnologias do ecossistema JavaScript.
   </p>
   <p>
-      Para ver o resultado final basta acessar: <a href="https://custom-ranek.vercel.app/">Ranek online 🛒</a>. Lembre-se, os dados da API são apagados a cada 20           minutos.
+    Para ver o resultado final, basta acessar: <a href="https://next-dash-souzzs.vercel.app/login">Dash next online 🛒</a>.
   </p>
-  <img src="/public/banner-next-dash.PNG" alt="Demo Ranek"/>
+  <img src="/public/banner-next-dash.PNG" alt="Demonstração dash next"/>
 </div>
 
 <div id="aprendizados">
@@ -42,13 +42,17 @@
     </a>
     </div>
 </div>
-  
- <div id="autor">
+<div id="autor">
   <h1>✏️ Autor.</h1>
   <p>Desenvolvimento por <a href="https://github.com/souzzs">Caio Souza</a>.</p>
-  <p>
-    <a href="https://instagram.com/seu-usuario/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&amp;logo=instagram&amp;logoColor=white" alt="Instagram Badge"></a>
-    <a href="https://discord.gg/seu-server"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt="Discord Badge"></a>
-    <a href="https://www.linkedin.com/in/seu-usuario/"><img src="https://img.shields.io/badge/  LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="Linkedin"></a>
+  <a href="https://www.linkedin.com/in/souzzs/" target="_blank">
+    <img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+  </a>
+  <a href="mailto:souzsdev@gmail.com" target="_blank">
+    <img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white">
+  </a>
+  <a href="https://discord.gg/BsnqGK6e" target="_blank">
+    <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
+  </a>
   </p>
 </div>
